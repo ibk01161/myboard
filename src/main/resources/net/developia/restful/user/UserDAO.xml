@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.developia.restful.user.UserDAO">
+	
+	<select id="getUser" parameterType="UserVo" resultType="UserVO">
+		select usr_no, usr_name, usr_id, usr_level, usr_status
+		from t_user
+		where usr_id= #{usr_id} and usr_pw = #{usr_pw}
+	</select>
+	
+	<select id="getWords" parameterType="String" resultType="ItemVO">
+		select id, value, label
+		from t_autocomplete
+		where id like '%' || #{term} || '%'
+	</select>
+
+
+</mapper>

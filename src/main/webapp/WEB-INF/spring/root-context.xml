@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id ="dataSource"
+		  class = "org.springframework.jndi.JndiObjectFactoryBean" 
+		  p:jndiName = "java:comp/env/jdbc/mydbcp"/>
+		  <!-- <property name = "jndiName" value = "java:comp/env/jdbc/mydbcp"/>
+	</bean> -->
+	
+	
+	
+	<bean id = "userSqlSession"
+		  class = "org.mybatis.spring.SqlSessionFactoryBean"
+		  p:dataSource-ref="dataSource"						
+		  p:typeAliasesPackage="net.developia.restful.user"/>
+		  <!-- ref : 참조할때 사용, value값 줄때는 ref없는거 사용-->
+	
+	<bean id="userDAO"
+		  class="org.mybatis.spring.mapper.MapperFactoryBean"
+		  p:sqlSessionFactory-ref="userSqlSession"
+		  p:mapperInterface="net.developia.restful.user.UserDAO"/>
+		  
+	<bean id = "boardSqlSession"
+		  class = "org.mybatis.spring.SqlSessionFactoryBean"
+		  p:dataSource-ref="dataSource"						
+		  p:typeAliasesPackage="net.developia.restful.board"/>
+		  
+	<bean id="boardDAO"
+		  class="org.mybatis.spring.mapper.MapperFactoryBean"
+		  p:sqlSessionFactory-ref="boardSqlSession"
+		  p:mapperInterface="net.developia.restful.board.BoardDAO"/>	  
+		
+</beans>
